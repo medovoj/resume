@@ -5,8 +5,7 @@
   Time: 15:53
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" 		uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form"   	uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="resume" 	tagdir="/WEB-INF/tags"%>
@@ -29,7 +28,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <a href="javascript:void(0);">Add skill</a>
+                    <a href="javascript:resume.ui.addBlock();">Add skill</a>
                 </div>
             </div>
             <hr />
@@ -41,3 +40,6 @@
         </form:form>
     </div>
 </div>
+<script id="ui-block-template" type="text/x-handlebars-template">
+    <resume:edit-skill-block index="{{blockIndex}}" />
+</script>

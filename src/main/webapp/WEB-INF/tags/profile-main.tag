@@ -17,28 +17,28 @@
 
         <ul class="list-group list-group-flush">
 
-            <a href="tel: +380501770454" class="list-group-item list-group-item-action text-lg-start">
+            <a href="tel: ${profile.phone}" class="list-group-item list-group-item-action text-lg-start">
                 <ion-icon name="call-outline"></ion-icon>
                 ${profile.phone}</a>
 
-            <a href="mailto: memm@gmail.com" class="list-group-item list-group-item-action text-lg-start">
+            <a href="mailto: ${profile.email}" class="list-group-item list-group-item-action text-lg-start">
                 <ion-icon name="mail-outline"></ion-icon>
                 ${profile.email}</a>
 
             <c:if test="${profile.contacts.skype != null }">
-                <a href="javascript:void(0);" class="list-group-item list-group-item-action text-lg-start">
+                <a href="${profile.contacts.skype}" class="list-group-item list-group-item-action text-lg-start">
                     <ion-icon name="mail-outline" size="medium"></ion-icon>
                         ${profile.contacts.skype}</a>
             </c:if>
 
             <c:if test="${profile.contacts.github != null }">
-            <a href="https://github.com" class="list-group-item list-group-item-action text-lg-start">
+            <a href="${profile.contacts.github}" class="list-group-item list-group-item-action text-lg-start">
                 <ion-icon name="logo-github"></ion-icon>
                 </i>  ${profile.contacts.github}</a>
             </c:if>
 
             <c:if test="${profile.contacts.facebook != null }">
-            <a href="https://facebook.com" class="list-group-item list-group-item-action text-lg-start">
+            <a href="${profile.contacts.facebook}" class="list-group-item list-group-item-action text-lg-start">
                 <ion-icon name="logo-facebook"></ion-icon>
                 ${profile.contacts.facebook}</a>
             </c:if>

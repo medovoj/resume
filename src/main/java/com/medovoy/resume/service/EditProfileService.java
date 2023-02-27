@@ -1,8 +1,6 @@
 package com.medovoy.resume.service;
 
-import com.medovoy.resume.entity.Profile;
-import com.medovoy.resume.entity.Skill;
-import com.medovoy.resume.entity.SkillCategory;
+import com.medovoy.resume.entity.*;
 import com.medovoy.resume.form.SignUpForm;
 import com.medovoy.resume.model.CurrentProfile;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,5 +17,13 @@ public interface EditProfileService {
 
     void updateSkills(Long idProfile, List<Skill> skills);
 
-    void updateProfileData(CurrentProfile currentProfile, Profile profileForm, MultipartFile uploadPhoto);
+    Profile findProfileById(CurrentProfile currentProfile);
+
+    Contacts findContactsById(CurrentProfile currentProfile);
+
+    void updateContacts(CurrentProfile currentProfile, Contacts contactsForm);
+
+    List<Language> listLanguages(CurrentProfile currentProfile);
+
+    void updateLanguages(CurrentProfile currentProfile, List<Language> items);
 }

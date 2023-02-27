@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "profile_restore", schema = "resume", catalog = "resume")
-public class ProfileRestore extends AbstractEntity implements Serializable {
+public class ProfileRestore extends AbstractEntity<Long> implements Serializable {
 
     @Id
     @Column(unique = true, nullable = false)

@@ -1,10 +1,11 @@
 package com.medovoy.resume.controller;
-import com.medovoy.resume.entity.Language;
+import com.medovoy.resume.entity.Contacts;
 import com.medovoy.resume.entity.Profile;
 import com.medovoy.resume.form.*;
 import com.medovoy.resume.model.CurrentProfile;
+import com.medovoy.resume.model.LanguageLevel;
+import com.medovoy.resume.model.LanguageType;
 import com.medovoy.resume.repository.ProfileRepository;
-import com.medovoy.resume.repository.SkillCategoryRepository;
 import com.medovoy.resume.service.EditProfileService;
 import com.medovoy.resume.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.util.Currency;
+import java.util.EnumSet;
 
 
 @Controller
@@ -31,10 +32,11 @@ public class EditProfileController {
 	@Autowired
 	private ProfileRepository profileRepository;
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String getEdit() {
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public String getEditProfile(Model model) {
+		model.addAttribute("profileForm", editProfileService.findProfileById(SecurityUtil.getCurrentProfile()));
 		return "edit/profile";
-    }
+	}
 
 	@RequestMapping(value = "/my-profile", method = RequestMethod.GET)
 	public String getMyProfile(@AuthenticationPrincipal CurrentProfile currentProfile) {
@@ -42,18 +44,34 @@ public class EditProfileController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String saveEditProfile(@Valid @ModelAttribute("profileForm") Profile profileForm, BindingResult bindingResult, @RequestParam("profilePhoto") MultipartFile uploadPhoto) {
+	public String saveEditProfile(@Valid @ModelAttribute("profileForm") Profile profileForm, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "edit/profile";
 		} else {
 			try {
-				editProfileService.updateProfileData(SecurityUtil.getCurrentProfile(), profileForm, uploadPhoto);
+//				editProfileService.updateProfileData(SecurityUtil.getCurrentProfile(), profileForm, null);
 				return "redirect:/edit/contacts";
 			} catch (Exception e) {
 //				bindingResult.addError(e.buildFieldError("profileForm"));
 				return "edit/profile";
 			}
 		}}
+
+	@RequestMapping(value = "/edit/contacts", method = RequestMethod.GET)
+	public String getEditContactsProfile(Model model) {
+		model.addAttribute("contactsForm", editProfileService.findContactsById(SecurityUtil.getCurrentProfile()));
+		return "edit/contacts";
+	}
+
+	@RequestMapping(value = "/edit/contacts", method = RequestMethod.POST)
+	public String saveEditContactsProfile(@Valid @ModelAttribute("contactsForm") Contacts contactsForm, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "edit/contacts";
+		} else {
+			editProfileService.updateContacts(SecurityUtil.getCurrentProfile(), contactsForm);
+			return "redirect:/edit/skills";
+		}
+	}
 
 
 
@@ -157,20 +175,24 @@ public class EditProfileController {
 		return "redirect:/mike-ross";
 	}
 
-	@RequestMapping(value = "/edit/language", method = RequestMethod.GET)
-	public String getEditLanguage(Model model) {
-
-		model.addAttribute("languageForm", new LanguageForm(profileRepository.findOne(1L).getLanguages()));
-		return "edit/language";
+	@RequestMapping(value = "/edit/languages", method = RequestMethod.GET)
+	public String getEditLanguages(Model model) {
+		model.addAttribute("languageForm", new LanguageForm(editProfileService.listLanguages(SecurityUtil.getCurrentProfile())));
+		model.addAttribute("languageTypes",  EnumSet.allOf(LanguageType.class));
+		model.addAttribute("languageLevels", EnumSet.allOf(LanguageLevel.class));
+		return "edit/languages";
 	}
 
-	@RequestMapping(value = "/edit/language", method = RequestMethod.POST)
-	public String saveEditLanguage(@Valid @ModelAttribute("languageForm") LanguageForm languageForm, BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()){
-
-			return "edit/language";
+	@RequestMapping(value = "/edit/languages", method = RequestMethod.POST)
+	public String saveEditLanguages(@Valid @ModelAttribute("languageForm") LanguageForm form, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("languageTypes",  EnumSet.allOf(LanguageType.class));
+			model.addAttribute("languageLevels", EnumSet.allOf(LanguageLevel.class));
+			return "edit/languages";
+		} else {
+			editProfileService.updateLanguages(SecurityUtil.getCurrentProfile(), form.getItems());
+			return "redirect:/edit/hobbies";
 		}
-		return "redirect:/mike-ross";
 	}
 
 	@RequestMapping(value = "/edit/hobbies", method = RequestMethod.GET)

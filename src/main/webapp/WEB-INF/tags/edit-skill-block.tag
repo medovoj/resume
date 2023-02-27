@@ -18,7 +18,9 @@
     <div class="col-xs-7 col-sm-8 col-md-10 value-container">
         <button type="button" class="btn-close float-end" onclick="$('#ui-item-${index }').remove();">
         </button>
-        <textarea name="items[${index }].value" class="form-control pull-right" required="required" rows="2">${skill.value }</textarea>
+        <label>
+            <textarea name="items[${index }].value" class="form-control pull-right" required="required" rows="2">${skill.value }</textarea>
+        </label>
     </div>
 </div>
 <div class="row skill-delim" >

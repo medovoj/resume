@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "skill_category", schema = "resume", catalog = "resume")
-public class SkillCategory {
+public class SkillCategory extends AbstractEntity<Long>{
 
     @Id
     @Column

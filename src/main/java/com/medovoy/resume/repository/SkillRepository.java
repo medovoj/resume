@@ -1,6 +1,5 @@
 package com.medovoy.resume.repository;
 
-import com.medovoy.resume.entity.Profile;
 import com.medovoy.resume.entity.Skill;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

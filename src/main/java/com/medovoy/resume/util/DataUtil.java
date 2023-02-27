@@ -1,7 +1,9 @@
 package com.medovoy.resume.util;
 
+import java.lang.annotation.Annotation;
 import java.util.Random;
 
+import com.medovoy.resume.entity.Contacts;
 import com.medovoy.resume.form.SignUpForm;
 import org.apache.commons.lang.WordUtils;
 
@@ -43,5 +45,10 @@ public class DataUtil {
 			uid.append(alphabet.charAt(r.nextInt(alphabet.length())));
 		}
 		return uid.toString();
+	}
+
+
+	public static <T extends Annotation> int copyFields(final Object from, final Object to) {
+		return copyFields(from, to);
 	}
 }

@@ -6,11 +6,12 @@ import com.medovoy.resume.model.LanguageLevel;
 import com.medovoy.resume.model.LanguageType;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "language", schema = "resume", catalog = "resume")
-public class Language {
+public class Language extends AbstractEntity<Long> implements Serializable, ProfileEntity, Comparable<Language>{
 
     @Id
     @SequenceGenerator(name="LANGUAGE_ID_GENERATOR", sequenceName="LANGUAGE_SEQ", allocationSize=1)
@@ -95,5 +96,10 @@ public class Language {
         result = 31 * result + (level != null ? level.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(Language o) {
+        return getName().compareToIgnoreCase(o.getName());
     }
 }

@@ -4,21 +4,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.medovoy.resume.constrain.annotation.EnglishLanguage;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "skill", schema = "resume", catalog = "resume")
-public class Skill implements Serializable, ProfileEntity {
+public class Skill extends AbstractEntity<Long> implements Serializable, ProfileEntity {
     @Id
-    @SequenceGenerator(name="SKILL_ID_GENERATOR", sequenceName="SKILL_SEQ", allocationSize=1)
+    @SequenceGenerator(name="SKILL_ID_GENERATOR", sequenceName="resume.SKILL_SEQ", allocationSize=1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SKILL_ID_GENERATOR")
     @Column(unique=true, nullable=false)
     private Long id;
 
+
     @Column(nullable=false, length=50)
-    @Size(min = 1)
     @EnglishLanguage
     private String category;
 

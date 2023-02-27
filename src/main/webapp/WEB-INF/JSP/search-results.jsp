@@ -3,7 +3,7 @@
 <%@ taglib prefix="resume" tagdir="/WEB-INF/tags"%>
 
 <div class="well">
-  <p>Найдено <strong>${page.totalElements }</strong> профилей</p>
+  <p>Find <strong>${page.totalElements }</strong> profiles</p>
 </div>
 
 <jsp:include page="profiles.jsp" />

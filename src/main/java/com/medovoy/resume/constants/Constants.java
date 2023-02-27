@@ -7,7 +7,6 @@ public final class Constants {
 
     public static final int MAX_PROFILES_PER_PAGE = 10;
 
-
     public static final String[] EMPTY_ARRAY = {};
 
     public static enum UIImageType {
@@ -27,25 +26,25 @@ public final class Constants {
             this.largeWidth = largeWidth;
             this.largeHeight = largeHeight;
         }
+
         public String getFolderName() {
             return name().toLowerCase();
         }
+
         public int getSmallWidth() {
             return smallWidth;
         }
+
         public int getSmallHeight() {
             return smallHeight;
         }
+
         public int getLargeWidth() {
             return largeWidth;
         }
+
         public int getLargeHeight() {
             return largeHeight;
         }
-    }
-
-    public static class UI {
-
-        public static final int MAX_PROFILES_PER_PAGE = 10;
     }
 }

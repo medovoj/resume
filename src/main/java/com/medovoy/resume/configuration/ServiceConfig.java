@@ -14,7 +14,7 @@ import java.io.IOException;
 @ComponentScan({ "com.medovoy.resume.service.impl",
 				 "com.medovoy.resume.controller",
 				 "com.medovoy.resume.filter",
-        "com.medovoy.resume.component"})
+       			 "com.medovoy.resume.component"})
 public class ServiceConfig {
 
 	@Bean

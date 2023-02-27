@@ -5,5 +5,5 @@
 <%@ attribute name="formName" 		required="true"  type="java.lang.String" %>
 
 <spring:hasBindErrors name="${formName }">
-	<div class="alert alert-danger">Пожалуйста, исправьте ошибки перед сохранением данных!</div>
+	<div class="alert alert-danger">Please correct the errors before saving the data!</div>
 </spring:hasBindErrors>

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "education", schema = "resume", catalog = "resume")
-public class Education implements Serializable, ProfileEntity {
+public class Education extends AbstractEntity<Long>  implements Serializable, ProfileEntity {
 
     @Id
     @SequenceGenerator(name="EDUCATION_ID_GENERATOR", sequenceName="EDUCATION_SEQ", allocationSize=1)

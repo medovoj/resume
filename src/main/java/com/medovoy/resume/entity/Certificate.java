@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "certificate", schema = "resume", catalog = "resume")
-public class Certificate implements Serializable, ProfileEntity {
+public class Certificate extends AbstractEntity<Long> implements Serializable, ProfileEntity  {
     @Id
     @SequenceGenerator(name = "PROFILE_ID_GENERATOR", sequenceName = "PROFILE_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROFILE_ID_GENERATOR")
@@ -89,4 +89,6 @@ public class Certificate implements Serializable, ProfileEntity {
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
+
+
 }

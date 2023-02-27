@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%--<%@ taglib prefix="sec" 	uri="http://www.springframework.org/security/tags" %>--%>
+<%@ taglib prefix="sec" 	uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="resume" tagdir="/WEB-INF/tags" %>
 
 <div class="col d-flex justify-content-center">
@@ -11,7 +11,7 @@
         </div>
         <div class="card-body">
             <form action="/sign-in-handler" method="post">
-                <%--			<sec:csrfInput/>--%>
+                			<sec:csrfInput/>
                 <c:if test="${sessionScope.SPRING_SECURITY_LAST_EXCEPTION != null}">
                     <div class="alert alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>

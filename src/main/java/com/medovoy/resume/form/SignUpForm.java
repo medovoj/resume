@@ -5,21 +5,18 @@ import javax.validation.constraints.Size;
 
 import com.medovoy.resume.constrain.annotation.EnglishLanguage;
 import com.medovoy.resume.constrain.annotation.FieldMatch;
-import org.hibernate.validator.constraints.SafeHtml;
 
 
-@FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
+//@FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
 public class SignUpForm extends PasswordForm {
 
     @NotNull
     @Size(max = 50)
-    @SafeHtml
     @EnglishLanguage(withNumbers = false, withSpeechSymbols = false)
     private String firstName;
 
     @NotNull
     @Size(max = 50)
-    @SafeHtml
     @EnglishLanguage(withNumbers = false, withSpeechSymbols = false)
     private String lastName;
 

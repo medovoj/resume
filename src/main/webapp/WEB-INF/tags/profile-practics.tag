@@ -8,8 +8,8 @@
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">
-			<i class="fa fa-briefcase"></i> Practic Experience
-			<c:if test="${showEdit }"><a href="/edit/practics" class="edit-block">Edit</a></c:if>
+			<i class="fa fa-briefcase"></i> Practice Experience
+			<c:if test="${showEdit }"><a href="/edit/practices" class="edit-block">Edit</a></c:if>
 		</h3>
 	</div>
 	<div class="panel-body">
@@ -42,12 +42,12 @@
 						</p>
 						<c:if test="${practic.demo != null }">
 						<p>
-							<strong>Demo: </strong><a href="${practic.demo}">${practic.demo}</a>
+							<strong>Demo: </strong><a href="${practice.demo}">${practic.demo}</a>
 						</p>
 						</c:if>
 						<c:if test="${practic.src != null }">
 						<p>
-							<strong>Source code: </strong><a href="${practic.src}">${practic.src}</a>
+							<strong>Source code: </strong><a href="${practice.src}">${practic.src}</a>
 						</p>
 						</c:if>
 					</div>

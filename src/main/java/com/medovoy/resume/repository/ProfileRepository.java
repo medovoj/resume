@@ -1,17 +1,16 @@
 package com.medovoy.resume.repository;
 
 import com.medovoy.resume.entity.Profile;
-import com.medovoy.resume.entity.Skill;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.RepositoryDefinition;
 
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-public interface ProfileRepository extends PagingAndSortingRepository<Profile, Long> {
+public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
 
     List<Profile> findAll();
@@ -33,4 +32,6 @@ public interface ProfileRepository extends PagingAndSortingRepository<Profile, L
     Page<Profile> findAllByCompletedTrue(Pageable pageable);
 
     List<Profile> findByCompletedFalseAndCreatedBefore(Date created);
+
+    Profile findById(Long id);
 }

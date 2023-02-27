@@ -2,7 +2,7 @@
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@ attribute name="profile" required="true" type="net.devstudy.resume.domain.Profile" %>
+<%@ attribute name="profile" required="true" type="com.medovoy.resume.entity.Profile"%>
 <%@ attribute name="showEdit"  required="false" type="java.lang.Boolean" %>
 
 <div class="panel panel-primary">
@@ -27,9 +27,6 @@
 		<a href="mailto:${profile.email}" class="list-group-item"><i class="fa fa-envelope"></i> ${profile.email}</a> 
 		<c:if test="${profile.contacts.skype != null }">
 		<a href="javascript:void(0);" class="list-group-item"><i class="fa fa-skype"></i>${profile.contacts.skype}</a> 
-		</c:if>
-		<c:if test="${profile.contacts.vkontakte != null }">
-		<a href="${profile.contacts.vkontakte}" class="list-group-item" target="_blank"><i class="fa fa-vk"></i> ${profile.contacts.vkontakte}</a> 
 		</c:if>
 		<c:if test="${profile.contacts.facebook != null }">
 		<a href="${profile.contacts.facebook}" class="list-group-item" target="_blank"><i class="fa fa-facebook"></i> ${profile.contacts.facebook}</a> 

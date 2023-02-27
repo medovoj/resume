@@ -1,13 +1,12 @@
 package com.medovoy.resume.form;
 
 
-
+import com.medovoy.resume.constrain.annotation.FieldMatch;
 
 //@FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
 //@EnableFormErrorConversion(formName="passwordForm", fieldReference="confirmPassword", validationAnnotationClass=FieldMatch.class)
 public class PasswordForm {
 
-//	@PasswordStrength
 	private String password;
 	
 	private String confirmPassword;

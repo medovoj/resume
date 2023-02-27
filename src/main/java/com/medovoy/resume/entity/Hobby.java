@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "hobby", schema = "resume", catalog = "resume")
-public class Hobby implements Serializable, ProfileEntity, Comparable<Hobby> {
+public class Hobby extends AbstractEntity<Long> implements Serializable, ProfileEntity, Comparable<Hobby> {
 
     @Id
     @SequenceGenerator(name = "HOBBY_ID_GENERATOR", sequenceName = "HOBBY_SEQ", allocationSize = 1)

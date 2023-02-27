@@ -19,7 +19,7 @@ import java.util.List;
 public class Profile extends AbstractEntity<Long> implements Serializable {
 
     @Id
-    @SequenceGenerator(name = "PROFILE_ID_GENERATOR", sequenceName = "PROFILE_SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "PROFILE_ID_GENERATOR", sequenceName = "resume.PROFILE_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROFILE_ID_GENERATOR")
     @Column(unique = true, nullable = false)
     private Long id;

@@ -1,11 +1,10 @@
 package com.medovoy.resume.service.impl;
 
-import com.medovoy.resume.entity.Profile;
-import com.medovoy.resume.entity.Skill;
-import com.medovoy.resume.entity.SkillCategory;
+import com.medovoy.resume.entity.*;
 import com.medovoy.resume.exception.CantCompleteClientRequestException;
 import com.medovoy.resume.form.SignUpForm;
 import com.medovoy.resume.model.CurrentProfile;
+import com.medovoy.resume.repository.LanguageRepository;
 import com.medovoy.resume.repository.ProfileRepository;
 import com.medovoy.resume.repository.SkillCategoryRepository;
 import com.medovoy.resume.repository.search.ProfileSearchRepository;
@@ -18,9 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronizationAdapter;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +35,11 @@ public class EditProfileServiceImpl implements EditProfileService {
 
     @Autowired
     ProfileSearchRepository profileSearchRepository;
+
+    @Autowired
+    LanguageRepository languageRepository;
+
+
 
     @Value("${generate.uid.suffix.length}")
     private int generateUidSuffixLength;
@@ -60,26 +61,9 @@ public class EditProfileServiceImpl implements EditProfileService {
         profile.setPassword(signUpForm.getPassword());
         profile.setCompleted(false);
         profileRepository.save(profile);
-        registerCreateIndexProfileIfTransactionSuccess(profile);
-
         return profile;
     }
 
-    private void registerCreateIndexProfileIfTransactionSuccess(final Profile profile) {
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
-            @Override
-            public void afterCommit() {
-                LOGGER.info("New profile created: {}", profile.getUid());
-                profile.setCertificates(Collections.EMPTY_LIST);
-                profile.setPractices(Collections.EMPTY_LIST);
-                profile.setLanguages(Collections.EMPTY_LIST);
-                profile.setSkills(Collections.EMPTY_LIST);
-                profile.setCourses(Collections.EMPTY_LIST);
-                profileSearchRepository.save(profile);
-                LOGGER.info("New profile index created: {}", profile.getUid());
-            }
-        });
-    }
 
     private String generateProfileUid(SignUpForm signUpForm) {
         String baseUid = DataUtil.generateProfileUid(signUpForm);
@@ -115,21 +99,49 @@ public class EditProfileServiceImpl implements EditProfileService {
         }
     }
 
+
+
+
+
+    @Override
+    public Profile findProfileById(CurrentProfile currentProfile) {
+        return getProfile(currentProfile);
+    }
+
+    @Override
+    public Contacts findContactsById(CurrentProfile currentProfile) {
+        return getProfile(currentProfile).getContacts();
+    }
+
     @Override
     @Transactional
-    public void updateProfileData(CurrentProfile currentProfile, Profile profileForm, MultipartFile uploadPhoto) {
+    public void updateContacts(CurrentProfile currentProfile, Contacts contactsForm) {
         Profile loadedProfile = profileRepository.findOne(currentProfile.getId());
-        List<String> oldProfilePhotos = Collections.EMPTY_LIST;
-//        if (!uploadPhoto.isEmpty()) {
-//            UploadResult uploadResult = imageProcessorService.processNewProfilePhoto(uploadPhoto);
-//            deleteUploadedPhotosIfTransactionFailed(uploadResult);
-//            oldProfilePhotos = Arrays.asList(new String[] { loadedProfile.getLargePhoto(), loadedProfile.getSmallPhoto() });
-//            loadedProfile.updateProfilePhotos(uploadResult.getLargeUrl(), uploadResult.getSmallUrl());
-//        }
-//        int copiedFieldsCount = DataUtil.copyFields(profileForm, loadedProfile, ProfileDataFieldGroup.class);
-//        boolean shouldProfileBeUpdated = !uploadPhoto.isEmpty() || copiedFieldsCount > 0;
-//        if (shouldProfileBeUpdated) {
-//            executeUpdateProfileData(currentProfile, loadedProfile, oldProfilePhotos);
-//        }
+        int copiedFieldsCount = DataUtil.copyFields(contactsForm, loadedProfile.getContacts());
+        boolean shouldProfileBeUpdated = copiedFieldsCount > 0;
+        if (shouldProfileBeUpdated) {
+            profileRepository.save(loadedProfile);
+        } else {
+            LOGGER.debug("Profile contacts not updated");
+        }
     }
+
+    @Override
+    public List<Language> listLanguages(CurrentProfile currentProfile) {
+        return languageRepository.findByProfileIdOrderByIdAsc(currentProfile.getId());
+
+    }
+
+    @Override
+    @Transactional
+    public void updateLanguages(CurrentProfile currentProfile, List<Language> languages) {
+        Profile profile = profileRepository.findOne(currentProfile.getId());
+        profile.setLanguages(languages);
+        profileRepository.save(profile);
+    }
+
+    protected Profile getProfile(CurrentProfile currentProfile) {
+        return profileRepository.findOne(currentProfile.getId());
+    }
+
 }
